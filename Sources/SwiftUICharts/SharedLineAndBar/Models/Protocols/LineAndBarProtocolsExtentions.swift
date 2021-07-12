@@ -119,7 +119,7 @@ extension CTLineBarChartDataProtocol where Self: GetDataProtocol {
                 Spacer()
                     .frame(height: yAxisPaddingHeight)
             }
-            ForEach(self.labelsArray.indices.reversed(), id: \.self) { i in
+            ForEach(self.labelsArray.indices, id: \.self) { i in
                 Text(self.labelsArray[i])
                     .font(self.chartStyle.yAxisLabelFont)
                     .foregroundColor(self.chartStyle.yAxisLabelColour)
