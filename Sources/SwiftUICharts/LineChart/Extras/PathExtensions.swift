@@ -29,17 +29,17 @@ extension Path {
         if dataPoints.count >= 2 {
             
             let firstPoint = CGPoint(x: 0,
-                                     y: (CGFloat(dataPoints[0].value - minValue) * -y) + rect.height)
+                                     y: (CGFloat(-dataPoints[0].value - minValue) * -y))
             path.move(to: firstPoint)
             
             for index in 1 ..< dataPoints.count {
                 let nextPoint = CGPoint(x: CGFloat(index) * x,
-                                        y: (CGFloat(dataPoints[index].value - minValue) * -y) + rect.height)
+                                        y: (CGFloat(-dataPoints[index].value - minValue) * -y))
                 path.addLine(to: nextPoint)
             }
             if isFilled {
-                path.addLine(to: CGPoint(x: CGFloat(dataPoints.count-1) * x, y: rect.height))
-                path.addLine(to: CGPoint(x: 0, y: rect.height))
+                path.addLine(to: CGPoint(x: CGFloat(dataPoints.count-1) * x, y: 0))
+                path.addLine(to: CGPoint(x: 0, y: 0))
                 path.closeSubpath()
             }
         }
@@ -59,15 +59,17 @@ extension Path {
         var path = Path()
         
         let firstPoint: CGPoint = CGPoint(x: 0,
-                                          y: (CGFloat(dataPoints[0].value - minValue) * -y) + rect.height)
+                                          y: (CGFloat(-dataPoints[0].value - minValue) * -y))
         path.move(to: firstPoint)
         
         var previousPoint = firstPoint
         var lastIndex: Int = 0
         
         for index in 1 ..< dataPoints.count {
+            let ttt = (CGFloat(-dataPoints[index].value - minValue) * -y)
+            
             let nextPoint = CGPoint(x: CGFloat(index) * x,
-                                    y: (CGFloat(dataPoints[index].value - minValue) * -y) + rect.height)
+                                    y: (CGFloat(-dataPoints[index].value - minValue) * -y))
             path.addCurve(to: nextPoint,
                           control1: CGPoint(x: previousPoint.x + (nextPoint.x - previousPoint.x) / 2,
                                             y: previousPoint.y),
