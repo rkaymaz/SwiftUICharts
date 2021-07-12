@@ -82,7 +82,7 @@ public final class LineChartData: CTLineChartDataProtocol, GetDataProtocol, Publ
                                     TempText(chartData: self, label: label, rotation: angle)
                                         .frame(width: min(self.getXSection(dataSet: self.dataSets, chartSize: self.viewData.chartSize), self.viewData.xAxislabelWidths.min() ?? 0),
                                                height: self.viewData.xAxisLabelHeights.max() ?? 0)
-                                        .offset(x: CGFloat(i) * (geo.frame(in: .local).width / CGFloat(self.dataSets.dataPoints.count - 1)),
+                                        .offset(x: CGFloat(i) * (geo.frame(in: .local).width / CGFloat(self.dataSets.dataPoints.count)),
                                                 y: 0)
                                 }
                             }
@@ -149,7 +149,7 @@ extension LineChartData {
         let minValue: Double = self.minValue
         let range: Double = self.range
         
-        let xSection: CGFloat = chartSize.width / CGFloat(dataSet.dataPoints.count - 1)
+        let xSection: CGFloat = chartSize.width / CGFloat(dataSet.dataPoints.count)
         let ySection: CGFloat = chartSize.height / CGFloat(range)
         
         let index: Int = Int((touchLocation.x + (xSection / 2)) / xSection)
@@ -169,7 +169,7 @@ extension LineChartData {
     }
     
     public final func getDataPoint(touchLocation: CGPoint, chartSize: CGRect) {
-        let xSection: CGFloat = chartSize.width / CGFloat(dataSets.dataPoints.count - 1)
+        let xSection: CGFloat = chartSize.width / CGFloat(dataSets.dataPoints.count)
         let index: Int = Int((touchLocation.x + (xSection / 2)) / xSection)
         if index >= 0 && index < dataSets.dataPoints.count {
             if !dataSets.style.ignoreZero {
@@ -186,6 +186,9 @@ extension LineChartData {
                 }
             }
             touchedDataPointPublisher.send(dataSets.dataPoints[index])
+        } else if index >= 0 && index == dataSets.dataPoints.count {
+            dataSets.dataPoints[index-1].legendTag = dataSets.legendTitle
+            self.infoView.touchOverlayInfo = [dataSets.dataPoints[index-1]]
         }
     }
 }

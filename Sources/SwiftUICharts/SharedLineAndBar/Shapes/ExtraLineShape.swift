@@ -55,7 +55,7 @@ extension Path {
         minValue: Double,
         range: Double
     ) -> Path {
-        let x: CGFloat = rect.width / CGFloat(dataPoints.count - 1)
+        let x: CGFloat = rect.width / CGFloat(dataPoints.count)
         let y: CGFloat = rect.height / CGFloat(range)
         var path = Path()
         if dataPoints.count >= 2 {
@@ -77,7 +77,7 @@ extension Path {
         minValue: Double,
         range: Double
     ) -> Path {
-        let x: CGFloat = rect.width / CGFloat(dataPoints.count - 1)
+        let x: CGFloat = rect.width / CGFloat(dataPoints.count)
         let y: CGFloat = rect.height / CGFloat(range)
         var path = Path()
         
@@ -157,7 +157,7 @@ extension Path {
         }
         
         let lastPoint: CGPoint = CGPoint(x: (CGFloat(dataPoints.count) * x),
-                                         y: (CGFloat(dataPoints[dataPoints.count - 1] - minValue) * -y) + rect.height)
+                                         y: (CGFloat(dataPoints[dataPoints.count] - minValue) * -y) + rect.height)
         path.addLine(to: lastPoint)
         
         return path

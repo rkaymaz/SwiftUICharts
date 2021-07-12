@@ -85,7 +85,7 @@ public final class MultiLineChartData: CTLineChartDataProtocol, GetDataProtocol,
                         }
                         .frame(width: min(self.getXSection(dataSet: self.dataSets.dataSets[0], chartSize: self.viewData.chartSize), self.viewData.xAxislabelWidths.min() ?? 0),
                                height: self.viewData.xAxisLabelHeights.max())
-                        if data != self.dataSets.dataSets[0].dataPoints[self.dataSets.dataSets[0].dataPoints.count - 1] {
+                        if data != self.dataSets.dataSets[0].dataPoints[self.dataSets.dataSets[0].dataPoints.count] {
                             Spacer()
                                 .frame(minWidth: 0, maxWidth: 500)
                         }
@@ -168,7 +168,7 @@ extension MultiLineChartData {
     public func getPointLocation(dataSet: LineDataSet, touchLocation: CGPoint, chartSize: CGRect) -> CGPoint? {
         let minValue: Double = self.minValue
         let range: Double = self.range
-        let xSection: CGFloat = chartSize.width / CGFloat(dataSet.dataPoints.count - 1)
+        let xSection: CGFloat = chartSize.width / CGFloat(dataSet.dataPoints.count)
         let ySection: CGFloat = chartSize.height / CGFloat(range)
         let index: Int = Int((touchLocation.x + (xSection / 2)) / xSection)
         
@@ -188,7 +188,7 @@ extension MultiLineChartData {
     
     public func getDataPoint(touchLocation: CGPoint, chartSize: CGRect) {
         self.infoView.touchOverlayInfo = dataSets.dataSets.indices.compactMap { setIndex in
-            let xSection: CGFloat = chartSize.width / CGFloat(dataSets.dataSets[setIndex].dataPoints.count - 1)
+            let xSection: CGFloat = chartSize.width / CGFloat(dataSets.dataSets[setIndex].dataPoints.count)
             let index = Int((touchLocation.x + (xSection / 2)) / xSection)
             if index >= 0 && index < dataSets.dataSets[setIndex].dataPoints.count {
                 touchedDataPointPublisher.send(dataSets.dataSets[setIndex].dataPoints[index])
