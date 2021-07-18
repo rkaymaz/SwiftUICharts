@@ -170,7 +170,7 @@ extension LineChartData {
     
     public final func getDataPoint(touchLocation: CGPoint, chartSize: CGRect) {
         let xSection: CGFloat = chartSize.width / CGFloat(dataSets.dataPoints.count)
-        let index: Int = Int((touchLocation.x + (xSection / 2)) / xSection)
+        let index: Int = Int(touchLocation.x / xSection)
         if index >= 0 && index < dataSets.dataPoints.count {
             if !dataSets.style.ignoreZero {
                 dataSets.dataPoints[index].legendTag = dataSets.legendTitle
